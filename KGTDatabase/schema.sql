@@ -99,6 +99,7 @@ VALUES ('Leia', (SELECT family_id FROM families WHERE family_name = 'Skywalker')
         ('Maggie', (SELECT family_id FROM families WHERE family_name = 'Simpson'));
         
         
+        
 
 SELECT family_id FROM families WHERE family_name = 'Skywalker';
 
@@ -169,3 +170,8 @@ SELECT * from kids WHERE firstname = 'Oscar' and family_id in
 
 SELECT family_id from families where user_id = 8;
 
+SELECT * from gifts where gift_name = 'Pacifier';
+
+UPDATE gifts SET kid_id = 5 WHERE gift_name = 'Pacifier';
+
+DELETE FROM gifts where gift_id IN (19,20,21,22,23);
