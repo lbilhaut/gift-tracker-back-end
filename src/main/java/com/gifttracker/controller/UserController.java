@@ -14,9 +14,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.gifttracker.model.User;
 import com.gifttracker.model.UserDao;
 import com.gifttracker.security.SecurityUtility;
+import com.gifttracker.utilities.Constant;
 
 @Controller
 public class UserController {
+	
+	String RELATIVE_PATH = Constant.RELATIVE_PATH;
 	
 	@Autowired
 	private UserDao daoUser;
@@ -56,7 +59,7 @@ public class UserController {
 
 	
 	@RequestMapping(path="/login")
-	public String login() {
+	public String login() {	
 		return "user/login";
 	}
 	
