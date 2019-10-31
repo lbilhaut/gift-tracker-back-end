@@ -34,7 +34,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(path="/register")
-	public String register() {
+	public String register(HttpSession session) {
+		session.setAttribute("RELATIVE_PATH", "RELATIVE_PATH");
 		return "user/register";
 	}
 	
@@ -59,7 +60,8 @@ public class UserController {
 
 	
 	@RequestMapping(path="/login")
-	public String login() {	
+	public String login(HttpSession session) {	
+		session.setAttribute("RELATIVE_PATH", "RELATIVE_PATH");
 		return "user/login";
 	}
 	

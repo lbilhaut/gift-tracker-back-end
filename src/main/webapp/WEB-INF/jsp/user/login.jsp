@@ -14,7 +14,7 @@
 			</div>
 		</c:if>
 	</div>
-	<form method="POST" action="/KidsGiftTracker2/user-logged-in" _lpchecked="1">
+	<form method="POST" action="${RELATIVE_PATH}/user-logged-in" _lpchecked="1">
 	<div class="formInputGroup">
 		<input type="text" class="form-control col-lg-4 offset-lg-4" placeholder="Username" name="username" aria-label="user name"/>
 		<input type="text" class="form-control col-lg-4 offset-lg-4" placeholder="Password" name="password" />
