@@ -40,8 +40,6 @@ public class GiftController {
 	
 	@RequestMapping("/add-a-gift")
 	public String displayAddAGift(HttpSession session, @RequestParam (required = false) Long kidId) {
-		System.out.println("In the add a gift page");
-		System.out.println("Kid's id is " + kidId);
 		User user = (User) session.getAttribute("user");
 		List<String> listOfKidNames = daoKid.getListOfKidNames(user.getUserId());
 		session.setAttribute("listOfKids", listOfKidNames);
@@ -57,9 +55,13 @@ public class GiftController {
 		
 		Long kidId = daoKid.getKidIdFromKidNameAndUserId(kidFirstname, user.getUserId());
 		newGift.setKidId(kidId);
-	
+
+//		String filePath = session.getServletContext().getRealPath("/");
+//		System.out.println("file path is: "+ filePath);
+//	    String UPLOADED_FOLDER = filePath+kidId+"\\";
 	    String UPLOADED_FOLDER = Constant.UPLOAD_PATH+kidId+"\\";
-        File directory = new File(UPLOADED_FOLDER);
+	    System.out.println(UPLOADED_FOLDER);
+	    File directory = new File(UPLOADED_FOLDER);
         if (!directory.exists()) {
             if (directory.mkdir()) {
                 System.out.println("Directory is created!");
@@ -76,13 +78,17 @@ public class GiftController {
         try {
         	String fileName = file.getOriginalFilename();
         	fileName = ImageUtil.changeJPGExtention(fileName);
-        	System.out.println("Original Name is " + file.getOriginalFilename());
-        	System.out.println("FileName is " + fileName);
             // Get the file and save it somewhere
+        	
+                	
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + fileName);
-//            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-            Files.write(path, bytes);
+          Path path = Paths.get(UPLOADED_FOLDER + fileName);
+           Files.write(path, bytes);
+//          System.out.println("Saving picture is " + UPLOADED_FOLDER + fileName);  
+//            File dest = new File(UPLOADED_FOLDER + fileName);
+//            file.transferTo(dest);
+            
+            
             redirectAttributes.addFlashAttribute("message", 
                         "You successfully uploaded '" + file.getOriginalFilename() + "'");
             newGift.setGiftPictureName(fileName);
@@ -113,12 +119,14 @@ public class GiftController {
 		User user = (User) session.getAttribute("user");		
 		Long kidId = daoKid.getKidIdFromKidNameAndUserId(firstname, user.getUserId());
 		session.setAttribute("kidId", kidId);
-		session.setAttribute("path", Constant.UPLOAD_PATH);
+		String filePath = session.getServletContext().getRealPath("/");
+		session.setAttribute("path", filePath);
+//		session.setAttribute("path", Constant.UPLOAD_PATH);
 		List<Gift> listOfGifts = daoGift.getListOfGifts(kidId);
 		session.setAttribute("listOfGifts", listOfGifts);		
-		System.out.println("List of Gifts:");
-		Printer printer = new Printer();
-		printer.printGifts(listOfGifts);
+//		System.out.println("List of Gifts:");
+//		Printer printer = new Printer();
+//		printer.printGifts(listOfGifts);
 		return "displayData/see-gifts-kid";	
 	}
 	
