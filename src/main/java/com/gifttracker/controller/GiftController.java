@@ -11,9 +11,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,12 +24,21 @@ import com.gifttracker.model.Gift;
 import com.gifttracker.model.GiftDao;
 import com.gifttracker.model.KidDao;
 import com.gifttracker.model.User;
+import com.gifttracker.utilities.AmazonClient;
 import com.gifttracker.utilities.Constant;
 import com.gifttracker.utilities.ImageUtil;
 import com.gifttracker.utilities.Printer;
+import com.gifttracker.utilities.AmazonClient;
 
 @Controller
 public class GiftController {
+	
+	private AmazonClient amazonClient;
+	
+    @Autowired
+    GiftController(AmazonClient amazonClient) {
+        this.amazonClient = amazonClient;
+    }
 	
 	@Autowired
 	private FamilyDao daoFamily;
@@ -37,7 +48,7 @@ public class GiftController {
 
 	@Autowired
 	private GiftDao daoGift;
-	
+		
 	@RequestMapping("/add-a-gift")
 	public String displayAddAGift(HttpSession session, @RequestParam (required = false) Long kidId) {
 		User user = (User) session.getAttribute("user");
@@ -45,9 +56,9 @@ public class GiftController {
 		session.setAttribute("listOfKids", listOfKidNames);
 		return "addData/add-a-gift";
 	}
-	
+
 	@RequestMapping(path="/gift-added", method=RequestMethod.POST)
-	public String addAKid(HttpSession session, Gift newGift, @RequestParam String kidFirstname, 
+	public String addaGift(HttpSession session, Gift newGift, @RequestParam String kidFirstname, 
 			@RequestParam("file") MultipartFile file,
             RedirectAttributes redirectAttributes) {
 		
@@ -56,51 +67,92 @@ public class GiftController {
 		Long kidId = daoKid.getKidIdFromKidNameAndUserId(kidFirstname, user.getUserId());
 		newGift.setKidId(kidId);
 
-//		String filePath = session.getServletContext().getRealPath("/");
-//		System.out.println("file path is: "+ filePath);
-//	    String UPLOADED_FOLDER = filePath+kidId+"\\";
-	    String UPLOADED_FOLDER = Constant.UPLOAD_PATH+kidId+"\\";
-	    System.out.println(UPLOADED_FOLDER);
-	    File directory = new File(UPLOADED_FOLDER);
-        if (!directory.exists()) {
-            if (directory.mkdir()) {
-                System.out.println("Directory is created!");
-            } else {
-                System.out.println("Failed to create directory!");
-            }
-        }
+//	    String UPLOADED_FOLDER = Constant.UPLOAD_PATH+kidId+"\\";
+//	    System.out.println(UPLOADED_FOLDER);
+//	    File directory = new File(UPLOADED_FOLDER);
+//        if (!directory.exists()) {
+//            if (directory.mkdir()) {
+//                System.out.println("Directory is created!");
+//            } else {
+//                System.out.println("Failed to create directory!");
+//            }
+//        }
 	    
 	    if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
     		return "redirect:/add-a-gift";	
         }
 
-        try {
-        	String fileName = file.getOriginalFilename();
-        	fileName = ImageUtil.changeJPGExtention(fileName);
-            // Get the file and save it somewhere
-        	
-                	
-            byte[] bytes = file.getBytes();
-          Path path = Paths.get(UPLOADED_FOLDER + fileName);
-           Files.write(path, bytes);
-//          System.out.println("Saving picture is " + UPLOADED_FOLDER + fileName);  
-//            File dest = new File(UPLOADED_FOLDER + fileName);
-//            file.transferTo(dest);
-            
-            
-            redirectAttributes.addFlashAttribute("message", 
-                        "You successfully uploaded '" + file.getOriginalFilename() + "'");
-            newGift.setGiftPictureName(fileName);
+//        	String fileName = file.getOriginalFilename();
+//        	fileName = ImageUtil.changeJPGExtention(fileName);
+//   
+	    redirectAttributes.addFlashAttribute("message", 
+                "You successfully uploaded '" + file.getOriginalFilename() + "'");
 
-        } catch (IOException e) {
-        	System.out.println("Error while uploading the image");
-            e.printStackTrace();
-        }
+        String url = this.amazonClient.uploadFile(file);
+        newGift.setGiftPictureName(url);
+        daoGift.saveGift(newGift);
+        return "redirect:/dashboard";
 	    
-		daoGift.saveGift(newGift);
-		return "redirect:/dashboard";			
-	}
+         
+			}
+	
+	
+//	@RequestMapping(path="/gift-added", method=RequestMethod.POST)
+//	public String addAKid(HttpSession session, Gift newGift, @RequestParam String kidFirstname, 
+//			@RequestParam("file") MultipartFile file,
+//            RedirectAttributes redirectAttributes) {
+//		
+//		User user = (User) session.getAttribute("user");
+//		
+//		Long kidId = daoKid.getKidIdFromKidNameAndUserId(kidFirstname, user.getUserId());
+//		newGift.setKidId(kidId);
+//
+////		String filePath = session.getServletContext().getRealPath("/");
+////		System.out.println("file path is: "+ filePath);
+////	    String UPLOADED_FOLDER = filePath+kidId+"\\";
+//	    String UPLOADED_FOLDER = Constant.UPLOAD_PATH+kidId+"\\";
+//	    System.out.println(UPLOADED_FOLDER);
+//	    File directory = new File(UPLOADED_FOLDER);
+//        if (!directory.exists()) {
+//            if (directory.mkdir()) {
+//                System.out.println("Directory is created!");
+//            } else {
+//                System.out.println("Failed to create directory!");
+//            }
+//        }
+//	    
+//	    if (file.isEmpty()) {
+//            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+//    		return "redirect:/add-a-gift";	
+//        }
+//
+//        try {
+//        	String fileName = file.getOriginalFilename();
+//        	fileName = ImageUtil.changeJPGExtention(fileName);
+//            // Get the file and save it somewhere
+//        	
+//                	
+//            byte[] bytes = file.getBytes();
+//          Path path = Paths.get(UPLOADED_FOLDER + fileName);
+//           Files.write(path, bytes);
+////          System.out.println("Saving picture is " + UPLOADED_FOLDER + fileName);  
+////            File dest = new File(UPLOADED_FOLDER + fileName);
+////            file.transferTo(dest);
+//            
+//            
+//            redirectAttributes.addFlashAttribute("message", 
+//                        "You successfully uploaded '" + file.getOriginalFilename() + "'");
+//            newGift.setGiftPictureName(fileName);
+//
+//        } catch (IOException e) {
+//        	System.out.println("Error while uploading the image");
+//            e.printStackTrace();
+//        }
+//	    
+//		daoGift.saveGift(newGift);
+//		return "redirect:/dashboard";			
+//	}
 	
 	@RequestMapping(path="/see-gifts")
 	public String displayData(HttpSession session) {
@@ -129,5 +181,7 @@ public class GiftController {
 //		printer.printGifts(listOfGifts);
 		return "displayData/see-gifts-kid";	
 	}
+	
+
 	
 }

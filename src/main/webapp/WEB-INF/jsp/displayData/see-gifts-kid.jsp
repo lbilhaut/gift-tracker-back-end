@@ -8,7 +8,7 @@
 	<c:forEach var="gift" items="${listOfGifts}">
 		 <div class="row gift-list">
 	 			<div class="col-lg-2 offset-lg-3 col-md-3 col-sm-4 col-8 offset-2 border rounded"> 
-				<img class="img-fluid" src="${gift.path}" alt="image of a toy" />
+				<img class="img-fluid" src="${gift.giftPictureName}" alt="image of a toy" />
 	 		</div>
 			<div class="col-lg-4 col-8 offset-2 offset-lg-0 border rounded" id="gift-details">
 				<h3>${gift.giftName}</h3>

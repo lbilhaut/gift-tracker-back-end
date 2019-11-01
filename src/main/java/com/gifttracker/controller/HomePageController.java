@@ -17,5 +17,11 @@ public class HomePageController {
 		session.setAttribute("RELATIVE_PATH", RELATIVE_PATH);
 		return "welcome";
 	}
-		
+
+	@RequestMapping(value = {"/testUploadAWS3"})
+	public String displaytestUploadAWS3(HttpSession session) {
+		session.setAttribute("RELATIVE_PATH", RELATIVE_PATH);
+		return "dev-archive/testUploadAWS3";
+	}
+
 }

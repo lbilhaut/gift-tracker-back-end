@@ -10,10 +10,10 @@ public class Gift {
 	private String giftNotes;
 	private String path;
 	
-	public String getPath() {
-		String path="img/"+kidId+"/"+giftPictureName;
-		return path;
-	}
+//	public String getPath() {
+//		String path="img/"+kidId+"/"+giftPictureName;
+//		return path;
+//	}
 	public String getGiftPictureName() {
 		return giftPictureName;
 	}
