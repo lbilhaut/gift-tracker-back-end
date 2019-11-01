@@ -67,25 +67,5 @@ CREATE TABLE gifts(
         constraint pk_gifts primary key(gift_id),
         constraint fk_gifts_kids foreign key (kid_id) references kids(kid_id)
 );
-
--- SEED TABLES WITH DEMO VALUES
-INSERT INTO users (username, hashed_password)
-VALUES ('Demo', ']E;KuWUZ^,fY-mvQ2+r"djkZMpk6Q<jF');
-
-INSERT INTO families (user_id, family_name)
-VALUES (
-        (SELECT user_id FROM users WHERE username = 'Demo'), 
-        'Skywalker'),
-        (
-        (SELECT user_id FROM users WHERE username = 'Demo'), 
-        'Simpson')
-        ;
-        
-INSERT INTO kids (firstname,family_id)
-VALUES ('Leia', (SELECT family_id FROM families WHERE family_name = 'Skywalker')),
-        ('Luke', (SELECT family_id FROM families WHERE family_name = 'Skywalker')),
-        ('Bart', (SELECT family_id FROM families WHERE family_name = 'Simpson')),
-        ('Lisa', (SELECT family_id FROM families WHERE family_name = 'Simpson')),
-        ('Maggie', (SELECT family_id FROM families WHERE family_name = 'Simpson'));
-        
+ 
 COMMIT;
