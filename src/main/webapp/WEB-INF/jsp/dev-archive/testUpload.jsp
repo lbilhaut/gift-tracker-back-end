@@ -7,7 +7,7 @@
 <div class="container-fluid text-center">
 	<h1>Upload a Picture</h1>
 	<div class= "row">
-	<form method="POST" action="/KidsGiftTracker2/upload" enctype="multipart/form-data">
+	<form method="POST" action="${RELATIVE_PATH}/upload" enctype="multipart/form-data">
     	<input type="file" name="file" /><br/>
     	<input type="submit" value="Submit" />
 	</form>

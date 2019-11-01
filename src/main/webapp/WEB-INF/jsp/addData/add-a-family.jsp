@@ -8,7 +8,7 @@
 <div>
 <img class="col-lg-3 col-md-3 col-xs-4" src="img/family.png" alt="Family" />	
 </div>
-<form method="POST" action="/KidsGiftTracker2/family-added" _lpchecked="1">
+<form method="POST" action="${RELATIVE_PATH}/family-added" _lpchecked="1">
 <div class="formInputGroup">
 <input type="text" class="form-control col-lg-4 offset-lg-4" placeholder="Family nickname" name="familyNickname" aria-label="family nickname"/>
 <input type="text" class="form-control col-lg-4 offset-lg-4" placeholder="Family name" name="familyName" />

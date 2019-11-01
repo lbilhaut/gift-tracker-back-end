@@ -19,7 +19,7 @@
 		<div class="col-lg-4 offset-lg-3" id="dashboard-title">
 			<h1>${user.username}'s dashboard</h1>
 		</div>
-		<a href="/KidsGiftTracker2/logout" class="col-lg-2"><button type="button" class="btn btn-light btn-block">Log out</button></a>
+		<a href="${RELATIVE_PATH}/logout" class="col-lg-2"><button type="button" class="btn btn-light btn-block">Log out</button></a>
 	</div>
 	<c:if test="${user.username == 'Demo'}">
 		<c:import url="/WEB-INF/jsp/user/dashboard-demo.jsp" />	

@@ -18,11 +18,11 @@
 				<br><br>
 				<div class="container">
 				<div class="row">
-				<form method="POST" action="/KidsGiftTracker2/delete-a-kid" _lpchecked="1" class="col-lg-3 offset-lg-3">
+				<form method="POST" action="${RELATIVE_PATH}/delete-a-kid" _lpchecked="1" class="col-lg-3 offset-lg-3">
 					<input type="hidden" name="kidId" value="${kid.kidId}">
 					<input class="btn btn-primary formSubmitButton btn-block" type="submit" value="Delete" />
 				</form>		
-				<a href="/KidsGiftTracker2/edit-a-kid?kidId=${kid.kidId}" class="col-lg-3"><button type="button" class="btn btn-primary btn-block">Edit</button></a>
+				<a href="${RELATIVE_PATH}/edit-a-kid?kidId=${kid.kidId}" class="col-lg-3"><button type="button" class="btn btn-primary btn-block">Edit</button></a>
 				</div>
 				</div>
 				</div>	
@@ -31,6 +31,6 @@
 </div>
 <div class="text-center">
 
-		<a href="/KidsGiftTracker2/add-a-kid" class="col-lg-2"><button type="button" class="btn btn-primary">Add a New Kid</button></a>
+		<a href="${RELATIVE_PATH}/add-a-kid" class="col-lg-2"><button type="button" class="btn btn-primary">Add a New Kid</button></a>
 </div>
 <c:import url="/WEB-INF/jsp/common/footer.jsp" />

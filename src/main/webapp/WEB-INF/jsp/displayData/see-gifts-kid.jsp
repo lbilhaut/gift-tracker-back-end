@@ -24,13 +24,13 @@
 			</div>
 		</div>
 	</c:forEach>
-					<form method="POST" action="/KidsGiftTracker2/add-a-gift" _lpchecked="1" class="col-lg-3 offset-lg-3">
+					<form method="POST" action="${RELATIVE_PATH}/add-a-gift" _lpchecked="1" class="col-lg-3 offset-lg-3">
 					<input type="hidden" name="kidId" value="${kidId}">
 					<input class="btn btn-primary formSubmitButton btn-block" type="submit" value="Add a new gift to this kid" />
 				</form>		
 	
 	<div class="col-lg-2 offset-lg-5">
-		<a href="/KidsGiftTracker2/add-a-gift" ><button type="button" class="btn btn-success btn-block">Add a New Gift</button></a>
+		<a href="${RELATIVE_PATH}/add-a-gift" ><button type="button" class="btn btn-success btn-block">Add a New Gift</button></a>
 	</div>
 </div>
 

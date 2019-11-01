@@ -19,5 +19,5 @@
 <body>
 <div class="container-fluid">
 <div class="text-center">
-		<a href="/KidsGiftTracker2/dashboard"><img class="col-lg-2 col-md-3 col-sm-4 col-6" id="header_image" src="img/logoKGT.png" alt="Kids Gift Tracker logo" />	</a>
+		<a href="${RELATIVE_PATH}/dashboard"><img class="col-lg-2 col-md-3 col-sm-4 col-6" id="header_image" src="img/logoKGT.png" alt="Kids Gift Tracker logo" />	</a>
 </div>

@@ -16,7 +16,7 @@
 		</c:if>
 	</div>
 
-<form method="POST" action="/KidsGiftTracker2/gift-added" _lpchecked="1" enctype="multipart/form-data">
+<form method="POST" action="${RELATIVE_PATH}/gift-added" _lpchecked="1" enctype="multipart/form-data">
 <div class="formInputGroup">
 <input type="text" class="form-control col-lg-4 offset-lg-4" placeholder="Gift name*" name="giftName" aria-label="Gift name"/>
 <div class="container-fluid text-center">

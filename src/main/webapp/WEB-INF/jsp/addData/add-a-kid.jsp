@@ -10,7 +10,7 @@
 <img class="col-lg-1 1 col-md-3 col-sm-4 col-4" src="img/kid.png" alt="Kid" />	
 </div>
 
-<form method="POST" action="/KidsGiftTracker2/kid-added" _lpchecked="1">
+<form method="POST" action="${RELATIVE_PATH}/kid-added" _lpchecked="1">
 	<div class="formInputGroup">
 		<input type="number" class="form-control col-lg-4 offset-lg-4" placeholder="Birth year" name="birthYear" aria-label="kid birth year"/>
 		<input type="text" class="form-control col-lg-4 offset-lg-4" placeholder="Kid nickname" name="nickname" aria-label="kid nickname"/>

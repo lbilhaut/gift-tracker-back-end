@@ -6,7 +6,7 @@
 
 <h1>See my previous gifts</h1>
 
-<form method="POST" action="/KidsGiftTracker2/previous-gifts-kid" _lpchecked="1">
+<form method="POST" action="${RELATIVE_PATH}/previous-gifts-kid" _lpchecked="1">
 <div class="formInputGroup">
 		<div>
 	 		<select name="firstname" class="btn btn-light dropdown-toggle ">
