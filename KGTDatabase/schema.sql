@@ -68,19 +68,9 @@ CREATE TABLE gifts(
         constraint fk_gifts_kids foreign key (kid_id) references kids(kid_id)
 );
 
-
-
-COMMIT;
-
---DROP TABLE gifts;
---DROP TABLE kids;
---DROP TABLE families;
-
 -- SEED TABLES WITH DEMO VALUES
 INSERT INTO users (username, hashed_password)
 VALUES ('Demo', ']E;KuWUZ^,fY-mvQ2+r"djkZMpk6Q<jF');
-
-
 
 INSERT INTO families (user_id, family_name)
 VALUES (
@@ -98,80 +88,4 @@ VALUES ('Leia', (SELECT family_id FROM families WHERE family_name = 'Skywalker')
         ('Lisa', (SELECT family_id FROM families WHERE family_name = 'Simpson')),
         ('Maggie', (SELECT family_id FROM families WHERE family_name = 'Simpson'));
         
-        
-        
-
-SELECT family_id FROM families WHERE family_name = 'Skywalker';
-
-SELECT family_name
-FROM families;
-
-INSERT INTO families(family_nickname, family_name)
-VALUES('Other good family', 'Saletes');
-
-INSERT INTO kids(firstname)
-VALUES('Charlotte');
-
-SELECT firstname
-FROM kids;      
-
-SELECT family_name, family_id
-FROM families
-WHERE family_name = 'Saletes';
-
-SELECT kid_id
-FROM kids
-WHERE firstname = 'Charlotte';
-
-SELECT *
-FROM kids;
-
-SELECT *
-FROM gifts
-WHERE kid_id=1;
-
-SELECT username
-FROM users;
-
-SELECT hashed_password FROM users WHERE username = 'Lisou';
-
-UPDATE users SET hashed_password = 'laurentPass' WHERE username = 'Laurent';
-UPDATE users SET hashed_password = 'lisePass' WHERE username = 'Lisou';
-
-
-DELETE FROM users WHERE username = '';
-
-UPDATE kids SET firstname = 'Oscar', nickname = 'Ozzy', family_id = 2, birth_year = 2016 WHERE kid_id = 3;
-
-SELECT firstname from kids WHERE family_id IN
-        (SELECT family_id from families WHERE user_id = 2);
-
-
-SELECT * from kids;
-
-
-
-SELECT firstname from kids;
-
-
-SELECT family_id from families WHERE user_id = 1;
-
-
-DELETE from families where family_id = 8;
-
-DELETE from users where user_id in (7);
-
-SELECT family_name, family_id FROM families WHERE family_name = 'Bilhaut' AND user_id = 8;
-
-SELECT * from kids WHERE firstname = 'Oscar' and family_id in
-(SELECT family_id from families where user_id = 8
-)
-;
-
-SELECT family_id from families where user_id = 8;
-
-SELECT * from gifts where gift_name = 'Pacifier';
-
-UPDATE gifts SET kid_id = 5 WHERE gift_name = 'Pacifier';
-
-DELETE FROM gifts where gift_id IN (19,20,21,22,23);
+COMMIT;
