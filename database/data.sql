@@ -7,20 +7,18 @@ BEGIN;
 INSERT INTO users (username, hashed_password)
 VALUES ('Demo', ']E;KuWUZ^,fY-mvQ2+r"djkZMpk6Q<jF');
 
-INSERT INTO families (user_id, family_name)
+INSERT INTO families (family_name, user_id)
 VALUES (
-        (SELECT user_id FROM users WHERE username = 'Demo'), 
-        'Skywalker'),
+        'Skywalker', (SELECT user_id FROM users WHERE username = 'Demo')),
         (
-        (SELECT user_id FROM users WHERE username = 'Demo'), 
-        'Simpson')
+        'Simpson',  (SELECT user_id FROM users WHERE username = 'Demo'))
         ;
         
-INSERT INTO kids (firstname,family_id)
-VALUES ('Leia', (SELECT family_id FROM families WHERE family_name = 'Skywalker')),
-        ('Luke', (SELECT family_id FROM families WHERE family_name = 'Skywalker')),
-        ('Bart', (SELECT family_id FROM families WHERE family_name = 'Simpson')),
-        ('Lisa', (SELECT family_id FROM families WHERE family_name = 'Simpson')),
-        ('Maggie', (SELECT family_id FROM families WHERE family_name = 'Simpson'));
+INSERT INTO kids (firstname,family_id, user_id)
+VALUES ('Leia', (SELECT family_id FROM families WHERE family_name = 'Skywalker'), (SELECT user_id FROM users WHERE username = 'Demo')),
+        ('Luke', (SELECT family_id FROM families WHERE family_name = 'Skywalker'), (SELECT user_id FROM users WHERE username = 'Demo')),
+        ('Bart', (SELECT family_id FROM families WHERE family_name = 'Simpson'), (SELECT user_id FROM users WHERE username = 'Demo')),
+        ('Lisa', (SELECT family_id FROM families WHERE family_name = 'Simpson'), (SELECT user_id FROM users WHERE username = 'Demo')),
+        ('Maggie', (SELECT family_id FROM families WHERE family_name = 'Simpson'), (SELECT user_id FROM users WHERE username = 'Demo'));
         
 COMMIT;

@@ -3,11 +3,11 @@ package com.gifttracker.model;
 import java.util.List;
 
 public interface KidDao {
-	public void saveKid(Kid kid);
+	public boolean saveKid(Kid kid, String familyName, Long userId);
 	
 	public List<String> getListOfKidNames(Long long1);
 
-	public Long getKidIdFromKidName(String kidFirstname);
+	public Long getKidIdFromKidName(String kidFirstname, Long userId);
 
 	public List<Kid> getListOfKids(Long long1);
 
@@ -18,5 +18,7 @@ public interface KidDao {
 	public void deleteKid(Long kidId);
 
 	public Long getKidIdFromKidNameAndUserId(String kidFirstname, Long userId);
+
+	List<Long> getListOfUniqueFamilyId(Long userId);
 	
 }

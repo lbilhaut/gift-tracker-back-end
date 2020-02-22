@@ -166,7 +166,6 @@ public class GiftController {
 	
 	@RequestMapping(path="/previous-gifts-kid", method=RequestMethod.POST)
 	public String seeGifts(HttpSession session, @RequestParam String firstname) {
-		System.out.println("Want to see gifts to " + firstname);
 		session.setAttribute("kidName", firstname);
 		User user = (User) session.getAttribute("user");		
 		Long kidId = daoKid.getKidIdFromKidNameAndUserId(firstname, user.getUserId());

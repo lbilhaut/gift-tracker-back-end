@@ -27,7 +27,6 @@ public class UserController {
 	@RequestMapping(value = {"/dashboard"})
 	public String displayDashboard(HttpSession session) {
 		if(session.getAttribute("user") == null) {
-			System.out.println("No data from user, redirecting to register/login");
 			return "redirect:/";
 		}
 		return "user/dashboard";
@@ -48,8 +47,6 @@ public class UserController {
 	
 	@RequestMapping(path="/user-signed-up",method=RequestMethod.POST)
 	public String addAUser(User user, RedirectAttributes flashScope, @RequestParam String password, HttpSession session) {
-		System.out.println("User name is " + user.getUsername());
-		System.out.println("User password is " + user.getHashedPassword());
 		String hashedPassword = SecurityUtility.getHashedPassword(password);
 		user.setHashedPassword(hashedPassword);
 		daoUser.saveUser(user);
@@ -72,26 +69,21 @@ public class UserController {
 		if(listOfUsernames.contains(username)) {
 			String pw_hash = daoUser.getHashedPassword(username);
 			if(SecurityUtility.checkPassword(username, password, pw_hash)) {
-						System.out.println("Password matches the username");
 			}
 			else {
-				System.out.println("Password doesn't match the username");
 				message = "Wrong password";
 				flashScope.addFlashAttribute("message", message);
 				return "redirect:/login";	
 			}
 		}
 		else {
-			System.out.println("User not in the database!");
 			message = "This username doesn't exist";
 			flashScope.addFlashAttribute("message", message);
 			return "redirect:/login";	
 		}
 		flashScope.addFlashAttribute("loginSuccess", "You have successfully logged in!");
-		//session.setAttribute("user", username);
 		User user = daoUser.getUser(username);
 		session.setAttribute("user", user);
-		//User loggedUser = daoUser.getUser(user.getUsername(),user.getHashedPassword());
 		return "redirect:/dashboard";	
 	}
 
@@ -101,11 +93,5 @@ public class UserController {
 		session.setAttribute("user", demoUser);
 		return "user/dashboard";
 	}
-	
-//	path="/user-logged-in",method=RequestMethod.POST)
-//	public String loginAUser(@RequestParam String username, 
-//			RedirectAttributes flashScope, 
-//			@RequestParam String password, HttpSession session) {
-//		String message = "";
-		
+			
 }

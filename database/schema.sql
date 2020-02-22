@@ -15,9 +15,7 @@ CREATE TABLE users
         phone_number varchar(12),
         
         constraint pk_users primary key(user_id)
-
 );
-
 
 CREATE TABLE families
 (
@@ -41,18 +39,22 @@ CREATE TABLE families
         constraint fk_users foreign key (user_id) references users(user_id)
 );
 
+
 CREATE TABLE kids
 (
         kid_id serial,
+        user_id int not null,
         firstname varchar(64) not null,
         nickname varchar(64) null,
-        family_id int not null,
+        family_id int null,
         birth_year int null,
         birth_month int null,
         birth_day int null,
         
         constraint pk_kids primary key(kid_id),
-        constraint fk_kids_families foreign key (family_id) references families(family_id)
+        constraint fk_users foreign key (user_id) references users(user_id),
+        constraint fk_familes foreign key (family_id) references families(family_id),
+        constraint uq_firstName_family_user unique(firstname, family_id, user_id) 
 );
 
 CREATE TABLE gifts(
@@ -67,5 +69,6 @@ CREATE TABLE gifts(
         constraint pk_gifts primary key(gift_id),
         constraint fk_gifts_kids foreign key (kid_id) references kids(kid_id)
 );
+
  
 COMMIT;

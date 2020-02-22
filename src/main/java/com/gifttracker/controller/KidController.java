@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gifttracker.model.FamilyDao;
 import com.gifttracker.model.Kid;
@@ -30,23 +31,28 @@ public class KidController {
 	@RequestMapping("/add-a-kid")
 	public String displayAddAKid(HttpSession session, Kid newKid) {
 		User user = (User) session.getAttribute("user");
-		System.out.println("In the add a kid, user is " + user.getUsername());
-		System.out.println("In the add a kid, user is " + user.getUserId());
 		
 		List<String> listOfFamilyNames = daoFamily.getListOfFamilyNames(user.getUserId());
+		listOfFamilyNames.add("No Family");
 		session.setAttribute("listOfFamilies", listOfFamilyNames);
 		return "addData/add-a-kid";	
 	}
 	
 	@RequestMapping(path="/kid-added", method=RequestMethod.POST)
-	public String addAKid(HttpSession session, Kid newkid, @RequestParam String familyName, @RequestParam String firstname) {
-		System.out.println("in the post method of kid-added");
-//		Long familyId = daoFamily.getFamilyIdFromFamilyName(familyName);
-		User user = (User) session.getAttribute("user");
+	public String addAKid(HttpSession session, Kid newkid, @RequestParam String familyName, @RequestParam String firstname, RedirectAttributes redirectAttributes) {
+		User user = (User) session.getAttribute("user");		
+		newkid.setUserId(user.getUserId());
+		boolean success = daoKid.saveKid(newkid, familyName, user.getUserId());
+		if(success) {
+		    redirectAttributes.addFlashAttribute("message", 
+	                newkid.getFirstname() + " has been successfully saved.");			
+		}
+		else {
+			redirectAttributes.addFlashAttribute("message", 
+	                newkid.getFirstname() + " couldn't be saved because you already have a kid with the same firstname for this family.");			
+		}
+
 		
-		Long familyId = daoFamily.getFamilyIdFromUserIdAndFamilyName(user.getUserId(), familyName);
-		newkid.setFamilyId(familyId);
-		daoKid.saveKid(newkid);
 		return "redirect:/dashboard";			
 	}
 	

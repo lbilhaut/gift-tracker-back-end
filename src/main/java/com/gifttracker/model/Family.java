@@ -2,7 +2,6 @@ package com.gifttracker.model;
 
 public class Family {
 	private Long familyId;
-	private Long userId;
 	private String familyNickname;
 	private String familyName;
 	private String addressStreet;
@@ -17,14 +16,7 @@ public class Family {
 	private String parent2PhoneNumber;
 	private String notes;
 	
-	
-	
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+
 	public String getParent1Firstname() {
 		return parent1Firstname;
 	}
