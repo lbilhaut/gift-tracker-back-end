@@ -23,7 +23,6 @@ public class JdbcUserDao implements UserDao {
 	
 	@Override
 	public void saveUser(User user) {
-		System.out.println("In the save user method");
 		Long id = getNextId();
 		String insertSqlQueryString = "INSERT INTO users (user_id, username, hashed_password, firstname, "+
 								"lastname, email, phone_number) " +
@@ -57,9 +56,7 @@ public class JdbcUserDao implements UserDao {
 
 	@Override
 	public String getHashedPassword(String username) {
-		System.out.println("In getHashedPassword");
 		String queryString = "SELECT hashed_password FROM users WHERE username = ?;";
-		System.out.println("Query string is " + queryString);
 		SqlRowSet result = jdbcTemplate.queryForRowSet(queryString, username);
 		result.next();
 		return result.getString("hashed_password");
