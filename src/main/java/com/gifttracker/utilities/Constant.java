@@ -1,8 +1,8 @@
 package com.gifttracker.utilities;
 
 public class Constant {
-//	public static String RELATIVE_PATH = "/KidsGiftTracker2";  // For local development
-	public static String RELATIVE_PATH = "";  // For deployment
+	public static String RELATIVE_PATH = "/KidsGiftTracker2";  // For local development
+//	public static String RELATIVE_PATH = "";  // For deployment
 
 // For local development
 	public static String UPLOAD_PATH = "C:\\Users\\Lise Bilhaut\\eclipse-workspace\\KidsGiftTracker2\\src\\main\\webapp\\img\\";

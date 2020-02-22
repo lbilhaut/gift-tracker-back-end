@@ -16,12 +16,12 @@
 	</div>
 	<form method="POST" action="${RELATIVE_PATH}/user-logged-in" _lpchecked="1">
 	<div class="formInputGroup">
-		<input type="text" class="form-control col-lg-4 offset-lg-4" placeholder="Username" name="username" aria-label="user name"/>
+		<input type="text" class="form-control col-lg-4" placeholder="Username" name="username" aria-label="user name"/>
 		<input type="text" class="form-control col-lg-4 offset-lg-4" placeholder="Password" name="password" />
 	</div>
 	<input class="btn btn-primary formSubmitButton" type="submit" value="Submit" />
 	</form>
-	
+		
 
 </div>
 <c:import url="/WEB-INF/jsp/common/footer.jsp" />
