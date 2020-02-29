@@ -119,6 +119,7 @@ private Long getNextId() {
 			kid.setNickname(results.getString("nickname"));
 			kid.setFamilyId(results.getLong("family_id"));
 			kid.setBirthYear(results.getLong("birth_year"));
+			kid.setUserId(results.getLong("user_id"));
 			listOfKids.add(kid);			
 		}
 		

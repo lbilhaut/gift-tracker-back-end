@@ -44,4 +44,11 @@ public class Kid {
 	public void setBirthYear(Long birthYear) {
 		this.birthYear = birthYear;
 	}
+	@Override
+	public String toString() {
+		return "Kid [kidId=" + kidId + ", firstname=" + firstname + ", familyId=" + familyId + ", userId=" + userId
+				+ "]";
+	}
+	
+	
 }
