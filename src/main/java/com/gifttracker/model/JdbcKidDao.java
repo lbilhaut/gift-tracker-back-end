@@ -25,20 +25,30 @@ public class JdbcKidDao implements KidDao {
 	
 	@Override
 	public boolean saveKid(Kid kid, String familyName, Long userId) {
+		System.out.println("In the saveKid method");
 		Long id = getNextId();
+		System.out.println("id is " + id);
 		if(familyName.equals("No Family")) {
+			System.out.println("No family name, setting it to null");
 			kid.setFamilyId(null);
 		}
 		else {
+			System.out.println("Setting family name to " + familyName);
 			kid.setFamilyId(daoFamily.getFamilyIdFromFamilyName(familyName));
 		}
-		if(!checkDuplicateKids(kid, familyName, userId)) {
+//		if(!checkDuplicateKids(kid, familyName, userId)) {
+		System.out.println("kid_id: " + id);
+		System.out.println("user_id: " + kid.getUserId());
+		System.out.println("firstname: " + kid.getFirstname());
+		System.out.println("nickname: " + kid.getNickname());
+		System.out.println("family_id: " + kid.getFamilyId());
+		System.out.println("birth_year: " + kid.getBirthYear());
 			String insertSqlQueryString = "INSERT INTO kids (kid_id, user_id, firstname, nickname, family_id, birth_year)"+ 
 					" VALUES (?,?,?,?,?,?) ";
 			jdbcTemplate.update(insertSqlQueryString, id, kid.getUserId(), kid.getFirstname(), kid.getNickname(), kid.getFamilyId(), kid.getBirthYear());
 			return true;
-		}
-		return false;
+//		}
+//		return false;
 	}
 
 

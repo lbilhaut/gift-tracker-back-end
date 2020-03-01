@@ -7,8 +7,12 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,29 +43,38 @@ public class KidController {
 	@RequestMapping("/add-a-kid")
 	public String displayAddAKid(HttpSession session, Kid newKid) {
 		User user = (User) session.getAttribute("user");
-		
 		List<String> listOfFamilyNames = daoFamily.getListOfFamilyNames(user.getUserId());
 		listOfFamilyNames.add("No Family");
 		session.setAttribute("listOfFamilies", listOfFamilyNames);
 		return "addData/add-a-kid";	
 	}
 	
-	@RequestMapping(path="/kid-added", method=RequestMethod.POST)
-	public String addAKid(HttpSession session, Kid newkid, @RequestParam String familyName, @RequestParam String firstname, RedirectAttributes redirectAttributes) {
-		User user = (User) session.getAttribute("user");		
+	@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+	@PostMapping(
+			  value = "/saveKid", consumes = "application/json", produces = "application/json")
+	@RequestMapping(path="/kid-added-api", method=RequestMethod.POST)
+//	public String addAKid(HttpSession session, Kid newkid, @RequestParam String familyName, @RequestParam String firstname, RedirectAttributes redirectAttributes) {
+		public boolean addAKid(@RequestBody Kid newkid, HttpSession session, RedirectAttributes redirectAttributes) {
+		System.out.println("In the addAkid method");
+		System.out.println("kid is " + newkid.toString());
+//		User user = (User) session.getAttribute("user");		
+		User user = daoUser.getUser("Demo");
 		newkid.setUserId(user.getUserId());
-		boolean success = daoKid.saveKid(newkid, familyName, user.getUserId());
-		if(success) {
-		    redirectAttributes.addFlashAttribute("message", 
-	                newkid.getFirstname() + " has been successfully saved.");			
-		}
-		else {
-			redirectAttributes.addFlashAttribute("message", 
-	                newkid.getFirstname() + " couldn't be saved because you already have a kid with the same firstname for this family.");			
-		}
-
 		
-		return "redirect:/dashboard";			
+		return daoKid.saveKid(newkid, "No Family", user.getUserId());
+		
+//		boolean success = daoKid.saveKid(newkid, "No Family", user.getUserId());
+//		if(success) {
+//		    redirectAttributes.addFlashAttribute("message", 
+//	                newkid.getFirstname() + " has been successfully saved.");			
+//		}
+//		else {
+//			redirectAttributes.addFlashAttribute("message", 
+//	                newkid.getFirstname() + " couldn't be saved because you already have a kid with the same firstname for this family.");			
+//		}
+//
+//		return new ResponseEntity<Object>(HttpStatus.CREATED);
+//		return "redirect:/dashboard";			
 	}
 	
 	@RequestMapping(path="/see-kids")
@@ -77,12 +90,10 @@ public class KidController {
 	@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 	@RequestMapping(path="/see-kids-api")
 	public List<Kid> seeKidsAPI(HttpSession session) {
-		System.out.println("The kid API has been called");
 //		User user = (User) session.getAttribute("user");
 		User user = daoUser.getUser("Demo");
-		System.out.println("User id is " + user.getUserId());
+//		System.out.println("User id is " + user.getUserId());
 		List<Kid> listOfKids = daoKid.getListOfKids(user.getUserId());
-		System.out.println("List of kids: " + listOfKids);
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		session.setAttribute("currentYear", year);
 		session.setAttribute("listOfKids", listOfKids.toString());
